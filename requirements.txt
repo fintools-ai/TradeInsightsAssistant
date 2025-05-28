@@ -1,0 +1,18 @@
+# Core dependencies
+boto3>=1.28.0
+mcp>=0.1.0
+asyncio
+aiofiles>=23.0.0
+
+# Data processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Private dependencies
+llm-agent-prompts @ git+ssh://git@github.com/fintools-ai/llm-agent-prompts.git
+#mcp-openinterest-server @ git+ssh://git@github.com/fintools-ai/mcp-openinterest-server.git
+
+
+# Development
+pytest>=7.3.0
+pytest-asyncio>=0.21.0

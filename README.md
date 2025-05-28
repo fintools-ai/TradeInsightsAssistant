@@ -83,4 +83,18 @@ Assistant: Yes, TSLA’s 300 strike for next week saw a 40% jump in call OI toda
 
 ## 📦 Getting Started
 
-*Coming Soon* — Instructions forrunning the assistant will be provided in the upcoming release.
+*Coming Soon* — Instructions for running the assistant will be provided in the upcoming release.
+
+
+# The idea is that we use prism mcp to get the details
+# The config and api will be saved in another file which will be private for now and we don't want to share that information
+
+
+# Install dependencies
+
+```commandline
+pip install git+ssh://git@github.com/fintools-ai/mcp-openinterest-server.git
+
+pip install git+ssh://git@github.com/fintools-ai/llm-agent-prompts.git
+
+```
