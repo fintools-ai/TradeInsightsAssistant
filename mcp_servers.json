@@ -1,0 +1,9 @@
+{
+  "servers": [
+    {
+      "name": "openinterest",
+      "command": "mcp-openinterest-server",
+      "args": []
+    }
+  ]
+}

@@ -7,7 +7,7 @@ from typing import Dict, Any, List, Optional
 from datetime import datetime
 
 from bedrock_service.client import BedrockClient
-from mcp_client.client import MCPClient
+from mcp_client.registry import MCPRegistry
 from storage.file_manager import FileManager
 from agent.constants import ANALYSIS_PROMPT_TEMPLATE
 
@@ -17,38 +17,21 @@ logger = logging.getLogger(__name__)
 class TradingInsightsOrchestrator:
     def __init__(self):
         self.bedrock = BedrockClient()
-        self.mcp = MCPClient()
+        self.mcp_registry = MCPRegistry()
         self.storage = FileManager()
         self.conversation_history = []
         self.mcp_tools = []
 
     async def start(self):
         """Start the orchestrator services."""
-        await self.mcp.start()
-
-        # Wait for MCP to finish initializing
-        max_wait = 30  # seconds
-        start_time = datetime.now()
-
-        while True:
-            if self.mcp.is_initialized:
-                break
-
-            elapsed = (datetime.now() - start_time).total_seconds()
-            if elapsed > max_wait:
-                raise TimeoutError("MCP did not complete initialization in time")
-
-            await asyncio.sleep(0.1)
-
-        # Safe to call list_tools
-        self.mcp_tools = await self.mcp.list_tools()
-        logger.info(f"MCP server started with {len(self.mcp_tools)} tools")
-
+        await self.mcp_registry.start_all()
+        self.mcp_tools = await self.mcp_registry.get_all_tools()
+        logger.info(f"MCP servers started with {len(self.mcp_tools)} tools")
 
 
     async def stop(self):
         """Stop the orchestrator services."""
-        await self.mcp.stop()
+        await self.mcp_registry.stop_all()
         logger.info("Trading Insights Agent stopped")
 
     async def process_message(self, user_message: str) -> str:
@@ -88,7 +71,7 @@ class TradingInsightsOrchestrator:
 
                     # Call MCP tool
                     logger.info(f"Calling tool '{tool_name}' with args: {tool_args}")
-                    tool_result = await self.mcp.call_tool(tool_name, tool_args)
+                    tool_result = await self.mcp_registry.call_tool(tool_name, tool_args)
 
                     # Add Claude's response to history
                     self.conversation_history.append({

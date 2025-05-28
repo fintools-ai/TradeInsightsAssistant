@@ -20,17 +20,19 @@ class MCPClient:
         self.process = None
         self.request_id = 0
         self.is_initialized = False
+        self.command = MCP_COMMAND
+        self.args = MCP_ARGS
 
     async def start(self):
         """Start the MCP server process."""
         try:
             logger.info("Starting MCP server...")
-            logger.info(f"Command: {MCP_COMMAND} {' '.join(MCP_ARGS)}")
+            logger.info(f"Command: {self.command} {' '.join(self.args)}")
 
             # Start the process
             self.process = await asyncio.create_subprocess_exec(
-                MCP_COMMAND,
-                *MCP_ARGS,
+                self.command,
+                *self.args,
                 stdin=asyncio.subprocess.PIPE,
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE

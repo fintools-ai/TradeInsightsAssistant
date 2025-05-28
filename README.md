@@ -83,18 +83,45 @@ Assistant: Yes, TSLA’s 300 strike for next week saw a 40% jump in call OI toda
 
 ## 📦 Getting Started
 
-*Coming Soon* — Instructions for running the assistant will be provided in the upcoming release.
+### Installation
 
-
-# The idea is that we use prism mcp to get the details
-# The config and api will be saved in another file which will be private for now and we don't want to share that information
-
-
-# Install dependencies
-
-```commandline
+1. Install dependencies:
+```bash
+pip install -r requirements.txt
 pip install git+ssh://git@github.com/fintools-ai/mcp-openinterest-server.git
-
 pip install git+ssh://git@github.com/fintools-ai/llm-agent-prompts.git
-
 ```
+
+2. Run the application:
+```bash
+python main.py
+```
+
+### Adding MCP Servers
+
+The application uses a JSON-based registry to manage MCP servers. To add new MCP servers:
+
+1. Edit `mcp_servers.json`:
+```json
+{
+  "servers": [
+    {
+      "name": "openinterest",
+      "command": "mcp-openinterest-server",
+      "args": []
+    },
+    {
+      "name": "news",
+      "command": "mcp-news-server", 
+      "args": ["--api-key", "your-key"]
+    }
+  ]
+}
+```
+
+2. Restart the application - new servers will be automatically loaded and their tools made available to the AI agent.
+
+**Server Configuration:**
+- `name`: Unique identifier for the server
+- `command`: Command to start the MCP server
+- `args`: Command line arguments for the server

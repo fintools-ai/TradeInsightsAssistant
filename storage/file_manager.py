@@ -7,7 +7,6 @@ from typing import Dict, Any
 
 from agent.constants import STORAGE_OUTPUT_DIR, SAVE_ANALYSIS
 
-
 class FileManager:
     """Manages saving analysis outputs to filesystem."""
 
