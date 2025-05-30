@@ -5,6 +5,7 @@ asyncio
 aiofiles>=23.0.0
 
 anthropic>=0.25.0
+rich
 
 # Data processing
 pandas>=2.0.0
