@@ -1,8 +1,0 @@
-{
-  "query": "'Analyze SPY open interest for next 5 days",
-  "tool_args": {
-    "ticker": "SPY",
-    "days": 5
-  },
-  "timestamp": "2025-05-28T23:20:23.527215"
-}

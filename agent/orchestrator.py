@@ -1,12 +1,11 @@
 """Main orchestrator for the Trading Insights Agent."""
 
-import asyncio
 import json
 import logging
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List
 from datetime import datetime
 
-from bedrock_service.client import BedrockClient
+from llm_service.base import BaseLLMClient
 from mcp_client.registry import MCPRegistry
 from storage.file_manager import FileManager
 from agent.constants import ANALYSIS_PROMPT_TEMPLATE
@@ -15,8 +14,9 @@ logger = logging.getLogger(__name__)
 
 
 class TradingInsightsOrchestrator:
-    def __init__(self):
-        self.bedrock = BedrockClient()
+    def __init__(self,llm_client: BaseLLMClient):
+
+        self.llm_client = llm_client
         self.mcp_registry = MCPRegistry()
         self.storage = FileManager()
         self.conversation_history = []
@@ -55,14 +55,14 @@ class TradingInsightsOrchestrator:
             tool_definitions = self._get_tool_definitions()
 
             # First, send to Claude to understand the request
-            initial_response = await self.bedrock.converse(
+            initial_response = await self.llm_client.converse(
                 messages=self.conversation_history,
                 tools=tool_definitions
             )
 
             # Check if Claude wants to use a tool
-            if self.bedrock.has_tool_use(initial_response):
-                tool_use = self.bedrock.get_tool_use(initial_response)
+            if self.llm_client.has_tool_use(initial_response):
+                tool_use = self.llm_client.get_tool_use(initial_response)
 
                 if tool_use:
                     # Extract tool name and arguments
@@ -88,7 +88,7 @@ class TradingInsightsOrchestrator:
                     self.conversation_history.append({
                         "role": "assistant",
                         "content": [
-                            {"text": self.bedrock.extract_text_content(initial_response)},
+                            {"text": self.llm_client.extract_text_content(initial_response)},
                             {"toolUse": tool_use}
                         ]
                     })
@@ -120,8 +120,8 @@ class TradingInsightsOrchestrator:
                     logger.info(f"Conversation history has {len(self.conversation_history)} messages")
                     
                     # Send back to Claude for detailed analysis
-                    logger.info("Sending tool result and analysis prompt to Bedrock...")
-                    final_response = await self.bedrock.converse(
+                    logger.info("Sending tool result and analysis prompt to llm...")
+                    final_response = await self.llm_client.converse(
                         messages=self.conversation_history + [{
                             "role": "user",
                             "content": [{"text": analysis_prompt}]
@@ -130,7 +130,7 @@ class TradingInsightsOrchestrator:
                     )
 
                     # Extract analysis
-                    analysis_text = self.bedrock.extract_text_content(final_response)
+                    analysis_text = self.llm_client.extract_text_content(final_response)
 
                     # Save analysis if it's OI analysis
                     if tool_name == "analyze_open_interest":
@@ -157,7 +157,7 @@ class TradingInsightsOrchestrator:
                     return analysis_text
 
             # If no tool use, just return Claude's response
-            response_text = self.bedrock.extract_text_content(initial_response)
+            response_text = self.llm_client.extract_text_content(initial_response)
             self.conversation_history.append({
                 "role": "assistant",
                 "content": [{"text": response_text}]

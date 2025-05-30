@@ -212,7 +212,7 @@ class MCPClient:
                         logger.info(f"[MCP] Tool '{tool_name}' returned successfully")
                         
                         # Print the full tool response for debugging
-                        logger.info("[MCP] Full tool response:")
+                        logger.debug("[MCP] Full tool response:")
                         logger.info("=" * 80)
                         logger.info(json.dumps(tool_result, indent=2))
                         logger.info("=" * 80)

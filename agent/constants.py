@@ -1,5 +1,5 @@
 """Constants for Trading Insights Agent."""
-
+import json
 import os
 
 # Agent Info
@@ -11,6 +11,16 @@ BEDROCK_REGION = "us-east-1"
 BEDROCK_MODEL_ID = "us.anthropic.claude-sonnet-4-20250514-v1:0"
 BEDROCK_MAX_TOKENS = 4096
 BEDROCK_TEMPERATURE = 0.1
+
+# Claude API Configuration
+CONFIG_PATH = "/etc/config/TradingInsightsAgentConfig.json"
+with open(CONFIG_PATH, "r") as f:
+    config = json.load(f)
+
+CLAUDE_API_KEY = config.get("CLAUDE_API_KEY")
+CLAUDE_MODEL_ID = "claude-sonnet-4-20250514"
+CLAUDE_MAX_TOKENS = 4096
+CLAUDE_TEMPERATURE = 0.1
 
 # MCP Server Configuration
 MCP_COMMAND = "mcp-openinterest-server"

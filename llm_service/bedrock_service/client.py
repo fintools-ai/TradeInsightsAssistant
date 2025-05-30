@@ -5,6 +5,7 @@ import logging
 from typing import Dict, List, Any, Optional
 import boto3
 from botocore.config import Config
+from llm_service.base import BaseLLMClient
 
 from agent.constants import (
     BEDROCK_REGION,
@@ -17,7 +18,7 @@ from agent.constants import (
 logger = logging.getLogger(__name__)
 
 
-class BedrockClient:
+class BedrockClient(BaseLLMClient):
     """AWS Bedrock client using the Converse API."""
 
     def __init__(self):
