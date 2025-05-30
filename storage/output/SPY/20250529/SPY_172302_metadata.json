@@ -1,0 +1,9 @@
+{
+  "query": "I want to know as whole in what direction is the market heading in next 10-20 days, specially around June 20th week, use open interst data to tell me what is going to happen, and in what direction should I bet on",
+  "tool_args": {
+    "ticker": "SPY",
+    "days": 20,
+    "include_news": true
+  },
+  "timestamp": "2025-05-29T17:23:02.437084"
+}

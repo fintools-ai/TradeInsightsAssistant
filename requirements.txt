@@ -10,7 +10,7 @@ numpy>=1.24.0
 
 # Private dependencies
 llm-agent-prompts @ git+ssh://git@github.com/fintools-ai/llm-agent-prompts.git
-#mcp-openinterest-server @ git+ssh://git@github.com/fintools-ai/mcp-openinterest-server.git
+mcp-openinterest-server @ git+ssh://git@github.com/fintools-ai/mcp-openinterest-server.git
 
 
 # Development

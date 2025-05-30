@@ -8,7 +8,7 @@ AGENT_VERSION = "1.0.0"
 
 # AWS Bedrock Configuration
 BEDROCK_REGION = "us-east-1"
-BEDROCK_MODEL_ID = "anthropic.claude-3-5-sonnet-20241022-v2:0"  # Update to Opus 4 when available
+BEDROCK_MODEL_ID = "us.anthropic.claude-sonnet-4-20250514-v1:0"
 BEDROCK_MAX_TOKENS = 4096
 BEDROCK_TEMPERATURE = 0.1
 

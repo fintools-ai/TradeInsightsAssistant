@@ -1,0 +1,8 @@
+{
+  "query": "analyze hood but also take into consideration spy and VXX then tell me the complete story",
+  "tool_args": {
+    "days": 35,
+    "ticker": "VXX"
+  },
+  "timestamp": "2025-05-29T13:58:25.237386"
+}

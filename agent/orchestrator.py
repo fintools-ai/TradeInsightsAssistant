@@ -72,6 +72,17 @@ class TradingInsightsOrchestrator:
                     # Call MCP tool
                     logger.info(f"Calling tool '{tool_name}' with args: {tool_args}")
                     tool_result = await self.mcp_registry.call_tool(tool_name, tool_args)
+                    
+                    # Log the tool result for debugging
+                    logger.info(f"Tool result received. Type: {type(tool_result)}")
+                    logger.info(f"Tool result keys: {list(tool_result.keys()) if isinstance(tool_result, dict) else 'N/A'}")
+                    
+                    # Log a sample of the data if it's options data
+                    if isinstance(tool_result, dict) and "options_data" in tool_result:
+                        data_count = len(tool_result["options_data"])
+                        logger.info(f"Tool returned {data_count} options data entries")
+                        if data_count > 0:
+                            logger.info(f"Sample data entry: {json.dumps(tool_result['options_data'][0], indent=2)}")
 
                     # Add Claude's response to history
                     self.conversation_history.append({
@@ -83,25 +94,39 @@ class TradingInsightsOrchestrator:
                     })
 
                     # Add tool result to history
+                    tool_result_json = json.dumps(tool_result)
+                    logger.info(f"Tool result JSON size: {len(tool_result_json)} bytes")
+                    
                     self.conversation_history.append({
                         "role": "user",
                         "content": [{
                             "toolResult": {
                                 "toolUseId": tool_use.get("toolUseId"),
-                                "content": [{"text": json.dumps(tool_result)}]
+                                "content": [{"text": tool_result_json}]
                             }
                         }]
                     })
 
                     # Create analysis prompt
                     analysis_prompt = self._create_analysis_prompt(tool_result)
-
+                    
+                    # Log the analysis prompt being sent
+                    logger.info("Analysis prompt being sent to Bedrock:")
+                    logger.info("=" * 80)
+                    logger.info(analysis_prompt)
+                    logger.info("=" * 80)
+                    
+                    # Log conversation history size
+                    logger.info(f"Conversation history has {len(self.conversation_history)} messages")
+                    
                     # Send back to Claude for detailed analysis
+                    logger.info("Sending tool result and analysis prompt to Bedrock...")
                     final_response = await self.bedrock.converse(
                         messages=self.conversation_history + [{
                             "role": "user",
                             "content": [{"text": analysis_prompt}]
-                        }]
+                        }],
+                        tools=tool_definitions  # Include tool definitions for proper validation
                     )
 
                     # Extract analysis
