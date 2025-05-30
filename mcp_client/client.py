@@ -189,23 +189,23 @@ class MCPClient:
         response = await self._send_request(request, timeout=timeout)
 
         # Extract result
-        logger.info(f"[MCP] Raw response type: {type(response)}")
-        logger.info(f"[MCP] Response keys: {list(response.keys()) if isinstance(response, dict) else 'N/A'}")
+        logger.debug(f"[MCP] Raw response type: {type(response)}")
+        logger.debug(f"[MCP] Response keys: {list(response.keys()) if isinstance(response, dict) else 'N/A'}")
         
         if "result" in response:
             result = response["result"]
-            logger.info(f"[MCP] Result keys: {list(result.keys()) if isinstance(result, dict) else 'N/A'}")
+            logger.debug(f"[MCP] Result keys: {list(result.keys()) if isinstance(result, dict) else 'N/A'}")
             
             content = result.get("content", [])
             logger.info(f"[MCP] Content type: {type(content)}, length: {len(content) if isinstance(content, list) else 'N/A'}")
             
             if content and isinstance(content, list) and len(content) > 0:
                 first_content = content[0]
-                logger.info(f"[MCP] First content item keys: {list(first_content.keys()) if isinstance(first_content, dict) else 'N/A'}")
+                logger.debug(f"[MCP] First content item keys: {list(first_content.keys()) if isinstance(first_content, dict) else 'N/A'}")
                 
                 if "text" in first_content:
                     text_data = first_content["text"]
-                    logger.info(f"[MCP] Text data length: {len(text_data)}")
+                    logger.debug(f"[MCP] Text data length: {len(text_data)}")
                     
                     try:
                         tool_result = json.loads(text_data)

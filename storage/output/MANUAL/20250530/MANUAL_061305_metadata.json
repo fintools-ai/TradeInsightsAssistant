@@ -1,0 +1,5 @@
+{
+  "query": "I want you to get the open interest data for SPY for today and tell me what does it look like, what are the potential price magenets and what are the key areas of interest - what shuld I be looking for it today. I want to either buy put or call for ODTE throughout the day",
+  "manual_save": true,
+  "timestamp": "2025-05-30T06:13:05.115946"
+}
