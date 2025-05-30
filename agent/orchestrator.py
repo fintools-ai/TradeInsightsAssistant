@@ -1,5 +1,3 @@
-"""Main orchestrator for the Trading Insights Agent."""
-
 import json
 import logging
 from typing import Dict, Any, List
@@ -12,10 +10,8 @@ from agent.constants import ANALYSIS_PROMPT_TEMPLATE
 
 logger = logging.getLogger(__name__)
 
-
 class TradingInsightsOrchestrator:
-    def __init__(self,llm_client: BaseLLMClient):
-
+    def __init__(self, llm_client: BaseLLMClient):
         self.llm_client = llm_client
         self.mcp_registry = MCPRegistry()
         self.storage = FileManager()
@@ -23,68 +19,38 @@ class TradingInsightsOrchestrator:
         self.mcp_tools = []
 
     async def start(self):
-        """Start the orchestrator services."""
         await self.mcp_registry.start_all()
         self.mcp_tools = await self.mcp_registry.get_all_tools()
         logger.info(f"MCP servers started with {len(self.mcp_tools)} tools")
 
-
     async def stop(self):
-        """Stop the orchestrator services."""
         await self.mcp_registry.stop_all()
         logger.info("Trading Insights Agent stopped")
 
     async def process_message(self, user_message: str) -> str:
-        """
-        Process a user message and return the analysis.
-
-        Args:
-            user_message: User's question or request
-
-        Returns:
-            Analysis response
-        """
         try:
-            # Add user message to history
             self.conversation_history.append({
                 "role": "user",
                 "content": [{"text": user_message}]
             })
 
-            # Get tool definitions for Bedrock
             tool_definitions = self._get_tool_definitions()
 
-            # First, send to Claude to understand the request
             initial_response = await self.llm_client.converse(
                 messages=self.conversation_history,
                 tools=tool_definitions
             )
 
-            # Check if Claude wants to use a tool
             if self.llm_client.has_tool_use(initial_response):
                 tool_use = self.llm_client.get_tool_use(initial_response)
 
                 if tool_use:
-                    # Extract tool name and arguments
                     tool_name = tool_use.get("name")
                     tool_args = tool_use.get("input", {})
 
-                    # Call MCP tool
                     logger.info(f"Calling tool '{tool_name}' with args: {tool_args}")
                     tool_result = await self.mcp_registry.call_tool(tool_name, tool_args)
-                    
-                    # Log the tool result for debugging
-                    logger.info(f"Tool result received. Type: {type(tool_result)}")
-                    logger.info(f"Tool result keys: {list(tool_result.keys()) if isinstance(tool_result, dict) else 'N/A'}")
-                    
-                    # Log a sample of the data if it's options data
-                    if isinstance(tool_result, dict) and "options_data" in tool_result:
-                        data_count = len(tool_result["options_data"])
-                        logger.info(f"Tool returned {data_count} options data entries")
-                        if data_count > 0:
-                            logger.info(f"Sample data entry: {json.dumps(tool_result['options_data'][0], indent=2)}")
 
-                    # Add Claude's response to history
                     self.conversation_history.append({
                         "role": "assistant",
                         "content": [
@@ -93,46 +59,28 @@ class TradingInsightsOrchestrator:
                         ]
                     })
 
-                    # Add tool result to history
-                    tool_result_json = json.dumps(tool_result)
-                    logger.info(f"Tool result JSON size: {len(tool_result_json)} bytes")
-                    
                     self.conversation_history.append({
                         "role": "user",
                         "content": [{
                             "toolResult": {
                                 "toolUseId": tool_use.get("toolUseId"),
-                                "content": [{"text": tool_result_json}]
+                                "content": [{"text": json.dumps(tool_result)}]
                             }
                         }]
                     })
 
-                    # Create analysis prompt
                     analysis_prompt = self._create_analysis_prompt(tool_result)
-                    
-                    # Log the analysis prompt being sent
-                    logger.info("Analysis prompt being sent to Bedrock:")
-                    logger.info("=" * 80)
-                    logger.info(analysis_prompt)
-                    logger.info("=" * 80)
-                    
-                    # Log conversation history size
-                    logger.info(f"Conversation history has {len(self.conversation_history)} messages")
-                    
-                    # Send back to Claude for detailed analysis
-                    logger.info("Sending tool result and analysis prompt to llm...")
+
                     final_response = await self.llm_client.converse(
                         messages=self.conversation_history + [{
                             "role": "user",
                             "content": [{"text": analysis_prompt}]
                         }],
-                        tools=tool_definitions  # Include tool definitions for proper validation
+                        tools=tool_definitions
                     )
 
-                    # Extract analysis
                     analysis_text = self.llm_client.extract_text_content(final_response)
 
-                    # Save analysis if it's OI analysis
                     if tool_name == "analyze_open_interest":
                         ticker = tool_args.get("ticker", "UNKNOWN")
                         filepath = self.storage.save_analysis(
@@ -144,11 +92,9 @@ class TradingInsightsOrchestrator:
                                 "timestamp": datetime.now().isoformat()
                             }
                         )
-
                         if filepath:
                             analysis_text += f"\n\n---\n*Analysis saved to: {filepath}*"
 
-                    # Add to history
                     self.conversation_history.append({
                         "role": "assistant",
                         "content": [{"text": analysis_text}]
@@ -156,7 +102,6 @@ class TradingInsightsOrchestrator:
 
                     return analysis_text
 
-            # If no tool use, just return Claude's response
             response_text = self.llm_client.extract_text_content(initial_response)
             self.conversation_history.append({
                 "role": "assistant",
@@ -169,37 +114,33 @@ class TradingInsightsOrchestrator:
             logger.error(f"Error processing message: {str(e)}")
             return f"Error processing your request: {str(e)}"
 
-    def _get_tool_definitions(self) -> List[Dict[str, Any]]:
-        """Convert MCP tools to Bedrock tool definitions."""
-        bedrock_tools = []
+    async def save_last_response(self, query: str, force: bool = True):
+        """Save the last LLM response manually."""
+        for msg in reversed(self.conversation_history):
+            if msg["role"] == "assistant" and "text" in msg["content"][0]:
+                text = msg["content"][0]["text"]
+                self.storage.save_manual_response(text=text, query=query)
+                return
+        print("❌ No LLM response found to save.")
 
+    def _get_tool_definitions(self) -> List[Dict[str, Any]]:
+        bedrock_tools = []
         for tool in self.mcp_tools:
-            # Ensure description is not empty (Bedrock requirement)
             description = tool.get("description", "").strip()
             if not description:
-                if tool["name"] == "analyze_open_interest":
-                    description = "Analyzes options open interest data for a given ticker over specified days"
-                else:
-                    description = f"Tool: {tool['name']}"
-            
-            bedrock_tool = {
+                description = f"Tool: {tool['name']}"
+            bedrock_tools.append({
                 "toolSpec": {
                     "name": tool["name"],
                     "description": description,
-                    "inputSchema": {
-                        "json": tool.get("inputSchema", {})
-                    }
+                    "inputSchema": {"json": tool.get("inputSchema", {})}
                 }
-            }
-            bedrock_tools.append(bedrock_tool)
-
+            })
         return bedrock_tools
 
     def _create_analysis_prompt(self, tool_result: Dict[str, Any]) -> str:
-        """Create the detailed analysis prompt."""
         ticker = tool_result.get("ticker", "")
-
-        prompt = f"""
+        return f"""
 Based on the open interest data provided for {ticker}, please provide a comprehensive analysis following this exact structure:
 
 {ANALYSIS_PROMPT_TEMPLATE}
@@ -213,9 +154,6 @@ Remember to:
 - Format everything in clear markdown with proper sections
 """
 
-        return prompt
-
     def clear_history(self):
-        """Clear conversation history."""
         self.conversation_history = []
         logger.info("Conversation history cleared")
