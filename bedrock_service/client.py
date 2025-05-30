@@ -75,13 +75,43 @@ class BedrockClient:
                     "tools": tools
                 }
 
-            # Call Bedrock
-            response = self.client.converse(**request)
+            # Log the size of the request
+            request_json = json.dumps(request)
+            request_size = len(request_json)
+            logger.info(f"Bedrock request size: {request_size / 1024:.2f} KB")
+            
+            # Check if any message is too large
+            for i, msg in enumerate(messages):
+                msg_json = json.dumps(msg)
+                msg_size = len(msg_json)
+                if msg_size > 100000:  # 100KB
+                    logger.warning(f"Message {i} is large: {msg_size / 1024:.2f} KB")
+                    # Log the message role
+                    logger.info(f"Message {i} role: {msg.get('role', 'unknown')}")
+                    # If it's a tool result, log some info
+                    content = msg.get("content", [])
+                    if content and isinstance(content, list):
+                        for item in content:
+                            if "toolResult" in item:
+                                logger.info(f"Message {i} contains toolResult")
+
+            # Call Bedrock - make it truly async
+            import asyncio
+            loop = asyncio.get_event_loop()
+            response = await loop.run_in_executor(
+                None, 
+                lambda: self.client.converse(**request)
+            )
+            
+            logger.info("Bedrock response received successfully")
 
             return response
 
         except Exception as e:
             logger.error(f"Error calling Bedrock: {str(e)}")
+            # Log more details about the error
+            if hasattr(e, 'response'):
+                logger.error(f"Error response: {getattr(e.response, 'text', 'No text')}")
             raise
 
     def extract_text_content(self, response: Dict[str, Any]) -> str:

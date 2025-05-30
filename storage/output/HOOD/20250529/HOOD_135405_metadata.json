@@ -1,0 +1,8 @@
+{
+  "query": "analyze hood for next 35 days, I have Hood put option with 55 DTE open, what shuold i do with that, what does the open interest data say",
+  "tool_args": {
+    "ticker": "HOOD",
+    "days": 35
+  },
+  "timestamp": "2025-05-29T13:54:05.393885"
+}

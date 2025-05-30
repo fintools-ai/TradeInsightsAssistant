@@ -1,0 +1,9 @@
+{
+  "query": "take into consideration other tickers which might help resolve this, e.g VXX, bond related ticker if any and tell me what data is telling",
+  "tool_args": {
+    "days": 20,
+    "include_news": true,
+    "ticker": "VXX"
+  },
+  "timestamp": "2025-05-29T17:26:16.340798"
+}
