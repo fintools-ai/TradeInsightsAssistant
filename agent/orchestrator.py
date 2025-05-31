@@ -51,12 +51,16 @@ class TradingInsightsOrchestrator:
                     logger.info(f"Calling tool '{tool_name}' with args: {tool_args}")
                     tool_result = await self.mcp_registry.call_tool(tool_name, tool_args)
 
+                    # Build content list, only including text if it's not empty
+                    assistant_content = []
+                    text_content = self.llm_client.extract_text_content(initial_response)
+                    if text_content:
+                        assistant_content.append({"text": text_content})
+                    assistant_content.append({"toolUse": tool_use})
+                    
                     self.conversation_history.append({
                         "role": "assistant",
-                        "content": [
-                            {"text": self.llm_client.extract_text_content(initial_response)},
-                            {"toolUse": tool_use}
-                        ]
+                        "content": assistant_content
                     })
 
                     self.conversation_history.append({
