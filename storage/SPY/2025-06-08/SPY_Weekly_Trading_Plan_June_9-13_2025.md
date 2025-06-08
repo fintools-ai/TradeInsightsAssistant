@@ -96,9 +96,9 @@ Based on comprehensive analysis of open interest data, technical indicators, and
 ## Daily Trading Plan 📅
 
 ### Monday, June 9, 2025
-**Expected Range**: $596.00 - $600.00  
-**Bias**: Neutral with bearish undertone  
-**Key Levels**: 
+**Expected Range**: $596.00 - $600.00
+**Bias**: Neutral with bearish undertone
+**Key Levels**:
 - Support: $596.50 (5m POC), $595.00
 - Resistance: $600.00 (critical call wall)
 
@@ -117,8 +117,8 @@ Based on comprehensive analysis of open interest data, technical indicators, and
 ---
 
 ### Tuesday, June 10, 2025
-**Expected Range**: $594.00 - $598.00  
-**Bias**: Bearish (pre-CPI positioning)  
+**Expected Range**: $594.00 - $598.00
+**Bias**: Bearish (pre-CPI positioning)
 **Key Levels**:
 - Support: $594.00 (max pain), $591.00 (massive put OI)
 - Resistance: $597.00, $598.00
@@ -138,8 +138,8 @@ Based on comprehensive analysis of open interest data, technical indicators, and
 ---
 
 ### Wednesday, June 11, 2025 - CPI DAY 🚨
-**Expected Range**: $590.00 - $602.00 (wide range)  
-**Bias**: High volatility, direction dependent on data  
+**Expected Range**: $590.00 - $602.00 (wide range)
+**Bias**: High volatility, direction dependent on data
 **Key Levels**:
 - Support: $590.00 (critical), $585.00
 - Resistance: $600.00, $605.00
@@ -161,8 +161,8 @@ Based on comprehensive analysis of open interest data, technical indicators, and
 ---
 
 ### Thursday, June 12, 2025 - PPI DAY 📊
-**Expected Range**: $588.00 - $598.00  
-**Bias**: Continuation of Wednesday's trend  
+**Expected Range**: $588.00 - $598.00
+**Bias**: Continuation of Wednesday's trend
 **Key Levels**:
 - Support: $590.00, $585.00
 - Resistance: $595.00, $598.00
@@ -182,8 +182,8 @@ Based on comprehensive analysis of open interest data, technical indicators, and
 ---
 
 ### Friday, June 13, 2025 - Expiration Day 🎯
-**Expected Range**: $588.00 - $595.00  
-**Bias**: Pin to max pain $590  
+**Expected Range**: $588.00 - $595.00
+**Bias**: Pin to max pain $590
 **Key Levels**:
 - Critical Pin: $590.00 (massive open interest)
 - Range: $585.00 - $595.00
