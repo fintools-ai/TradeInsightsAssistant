@@ -85,7 +85,7 @@ class MCPClient:
                     break
                 decoded_line = line.decode().strip()
                 # Always log MCP server output at INFO level for visibility
-                logger.info(f"[MCP Server] {decoded_line}")
+                logger.debug(f"[MCP Server] {decoded_line}")
         except Exception as e:
             logger.error(f"Error reading MCP stderr: {str(e)}")
 

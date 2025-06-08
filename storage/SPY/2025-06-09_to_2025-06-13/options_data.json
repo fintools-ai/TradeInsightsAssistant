@@ -1,0 +1,233 @@
+{
+  "metadata": {
+    "ticker": "SPY",
+    "analysis_date": "2025-06-07",
+    "target_week": "2025-06-09_to_2025-06-13",
+    "current_price": 599.04,
+    "total_contracts_analyzed": 1210494
+  },
+  "daily_data": {
+    "2025-06-09": {
+      "expiry": "2025-06-09",
+      "total_oi": 211742,
+      "call_oi": 76268,
+      "put_oi": 135474,
+      "put_call_ratio": 1.78,
+      "max_pain": 595.0,
+      "weighted_avg_strike": 584.45,
+      "call_weighted_avg": 603.14,
+      "put_weighted_avg": 573.94,
+      "put_call_skew": -29.2,
+      "top_put_strikes": [
+        {"strike": 580.0, "oi": 10803},
+        {"strike": 562.0, "oi": 6713},
+        {"strike": 563.0, "oi": 6551},
+        {"strike": 588.0, "oi": 6000},
+        {"strike": 566.0, "oi": 5890}
+      ],
+      "top_call_strikes": [
+        {"strike": 600.0, "oi": 7646},
+        {"strike": 610.0, "oi": 5464},
+        {"strike": 603.0, "oi": 4655},
+        {"strike": 615.0, "oi": 4578},
+        {"strike": 596.0, "oi": 3752}
+      ]
+    },
+    "2025-06-10": {
+      "expiry": "2025-06-10",
+      "total_oi": 123196,
+      "call_oi": 47561,
+      "put_oi": 75635,
+      "put_call_ratio": 1.59,
+      "max_pain": 594.0,
+      "weighted_avg_strike": 587.41,
+      "call_weighted_avg": 604.63,
+      "put_weighted_avg": 576.59,
+      "put_call_skew": -28.04,
+      "top_put_strikes": [
+        {"strike": 591.0, "oi": 11383},
+        {"strike": 580.0, "oi": 5145},
+        {"strike": 590.0, "oi": 5015},
+        {"strike": 575.0, "oi": 4185},
+        {"strike": 560.0, "oi": 3834}
+      ],
+      "top_call_strikes": [
+        {"strike": 610.0, "oi": 4286},
+        {"strike": 600.0, "oi": 4068},
+        {"strike": 615.0, "oi": 3596},
+        {"strike": 602.0, "oi": 2866},
+        {"strike": 603.0, "oi": 2229}
+      ]
+    },
+    "2025-06-11": {
+      "expiry": "2025-06-11",
+      "total_oi": 74655,
+      "call_oi": 32350,
+      "put_oi": 42305,
+      "put_call_ratio": 1.31,
+      "max_pain": 593.0,
+      "weighted_avg_strike": 586.66,
+      "call_weighted_avg": 603.89,
+      "put_weighted_avg": 573.47,
+      "put_call_skew": -30.42,
+      "top_put_strikes": [
+        {"strike": 580.0, "oi": 6784},
+        {"strike": 570.0, "oi": 3490},
+        {"strike": 582.0, "oi": 1945},
+        {"strike": 590.0, "oi": 1715},
+        {"strike": 595.0, "oi": 1505}
+      ],
+      "top_call_strikes": [
+        {"strike": 605.0, "oi": 4321},
+        {"strike": 615.0, "oi": 2358},
+        {"strike": 597.0, "oi": 2268},
+        {"strike": 620.0, "oi": 1887},
+        {"strike": 600.0, "oi": 1622}
+      ]
+    },
+    "2025-06-12": {
+      "expiry": "2025-06-12",
+      "total_oi": 55109,
+      "call_oi": 22209,
+      "put_oi": 32900,
+      "put_call_ratio": 1.48,
+      "max_pain": 592.0,
+      "weighted_avg_strike": 585.67,
+      "call_weighted_avg": 603.76,
+      "put_weighted_avg": 573.46,
+      "put_call_skew": -30.3,
+      "top_put_strikes": [
+        {"strike": 575.0, "oi": 2649},
+        {"strike": 592.0, "oi": 2421},
+        {"strike": 581.0, "oi": 1958},
+        {"strike": 580.0, "oi": 1513},
+        {"strike": 582.0, "oi": 1382}
+      ],
+      "top_call_strikes": [
+        {"strike": 600.0, "oi": 3227},
+        {"strike": 613.0, "oi": 1427},
+        {"strike": 611.0, "oi": 1109},
+        {"strike": 605.0, "oi": 862},
+        {"strike": 597.0, "oi": 856}
+      ]
+    },
+    "2025-06-13": {
+      "expiry": "2025-06-13",
+      "total_oi": 571182,
+      "call_oi": 159555,
+      "put_oi": 411627,
+      "put_call_ratio": 2.58,
+      "max_pain": 590.0,
+      "weighted_avg_strike": 549.59,
+      "call_weighted_avg": 605.31,
+      "put_weighted_avg": 527.99,
+      "put_call_skew": -77.32,
+      "top_put_strikes": [
+        {"strike": 470.0, "oi": 71117},
+        {"strike": 505.0, "oi": 36646},
+        {"strike": 435.0, "oi": 35426},
+        {"strike": 580.0, "oi": 26248},
+        {"strike": 570.0, "oi": 23818}
+      ],
+      "top_call_strikes": [
+        {"strike": 600.0, "oi": 13074},
+        {"strike": 630.0, "oi": 9495},
+        {"strike": 605.0, "oi": 9114},
+        {"strike": 585.0, "oi": 7990},
+        {"strike": 615.0, "oi": 7471}
+      ]
+    }
+  },
+  "key_levels": {
+    "support_levels": [
+      {"strike": 580, "total_oi": 51468, "strength": "CRITICAL"},
+      {"strike": 590, "total_oi": 29773, "strength": "STRONG"},
+      {"strike": 585, "total_oi": 31331, "strength": "STRONG"},
+      {"strike": 575, "total_oi": 15549, "strength": "MODERATE"},
+      {"strike": 570, "total_oi": 38137, "strength": "CRITICAL"}
+    ],
+    "resistance_levels": [
+      {"strike": 600, "total_oi": 28515, "strength": "CRITICAL"},
+      {"strike": 605, "total_oi": 16843, "strength": "STRONG"},
+      {"strike": 610, "total_oi": 14471, "strength": "STRONG"},
+      {"strike": 615, "total_oi": 11038, "strength": "MODERATE"},
+      {"strike": 620, "total_oi": 9789, "strength": "MODERATE"}
+    ],
+    "gamma_flip_point": 598.5,
+    "max_pain_range": {"low": 590, "high": 595}
+  },
+  "technical_data": {
+    "daily": {
+      "rsi": 65.04,
+      "macd": 8.93,
+      "adx": 31.33,
+      "ema_20": 585.78,
+      "sma_50": 561.36,
+      "atr": 8.34,
+      "trend": "strong_uptrend",
+      "continuation_probability": 77.78
+    },
+    "intraday": {
+      "vwap": 599.43,
+      "rsi_5m": 53.62,
+      "cmf": -0.241,
+      "obv": -39038833,
+      "volume_bias": "bearish"
+    }
+  },
+  "volume_profile": {
+    "poc": 596.49,
+    "value_area_high": 600.44,
+    "value_area_low": 594.92,
+    "high_volume_nodes": [
+      {"range": "595.70-597.28", "volume": 36431464},
+      {"range": "599.26-600.04", "volume": 34835420},
+      {"range": "588.92-594.88", "volume": 353672179}
+    ]
+  },
+  "expected_moves": {
+    "weekly_straddle": 8.5,
+    "implied_weekly_move_pct": 1.42,
+    "implied_range": {"low": 590.5, "high": 607.5},
+    "historical_move_pct": 1.87
+  },
+  "trade_setups": [
+    {
+      "condition": "SPY < 591",
+      "action": "Buy 588 puts",
+      "entry": 0.85,
+      "target": 1.70,
+      "stop": 0.40,
+      "win_rate": 0.67
+    },
+    {
+      "condition": "SPY > 600",
+      "action": "Sell 603 calls",
+      "entry": 0.95,
+      "target": 0.05,
+      "stop": 1.90,
+      "win_rate": 0.73
+    },
+    {
+      "condition": "Pin 595",
+      "action": "Iron Condor 590/593/597/600",
+      "entry": 1.20,
+      "target": 0.00,
+      "stop": 1.80,
+      "win_rate": 0.68
+    }
+  ],
+  "events": {
+    "cpi_release": {
+      "date": "2025-06-11",
+      "time": "08:30 ET",
+      "expected": {"mom": 0.3, "yoy": 2.5},
+      "core_expected": {"mom": 0.3, "yoy": 2.9}
+    },
+    "fed_meeting": {
+      "date": "2025-06-17-18",
+      "next_week": true,
+      "rate_cut_probability": 0.33
+    }
+  }
+}
