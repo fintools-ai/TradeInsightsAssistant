@@ -85,19 +85,20 @@ class TradingInsightsOrchestrator:
 
                     analysis_text = self.llm_client.extract_text_content(final_response)
 
-                    if tool_name == "analyze_open_interest":
-                        ticker = tool_args.get("ticker", "UNKNOWN")
-                        filepath = self.storage.save_analysis(
-                            ticker=ticker,
-                            analysis_text=analysis_text,
-                            metadata={
-                                "query": user_message,
-                                "tool_args": tool_args,
-                                "timestamp": datetime.now().isoformat()
-                            }
-                        )
-                        if filepath:
-                            analysis_text += f"\n\n---\n*Analysis saved to: {filepath}*"
+                    # Extract ticker for saving (try from tool args or result)
+                    ticker = tool_args.get("ticker") or tool_args.get("symbol") or tool_result.get("ticker", "UNKNOWN")
+                    filepath = self.storage.save_analysis(
+                        ticker=ticker,
+                        analysis_text=analysis_text,
+                        metadata={
+                            "query": user_message,
+                            "tool_used": tool_name,
+                            "tool_args": tool_args,
+                            "timestamp": datetime.now().isoformat()
+                        }
+                    )
+                    if filepath:
+                        analysis_text += f"\n\n---\n*Analysis saved to: {filepath}*"
 
                     self.conversation_history.append({
                         "role": "assistant",

@@ -4,6 +4,11 @@
       "name": "openinterest",
       "command": "mcp-openinterest-server",
       "args": []
+    },
+    {
+      "name": "market-data",
+      "command": "mcp-market-data-server",
+      "args": []
     }
   ]
 }
