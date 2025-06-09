@@ -1,9 +1,0 @@
-{
-  "query": "use the data from SPY, VXX, TLT and tell me what does it look for next 10 days and based on all these data what is the comprehensive analysis",
-  "tool_args": {
-    "days": 20,
-    "include_news": true,
-    "ticker": "TLT"
-  },
-  "timestamp": "2025-05-29T17:38:18.757470"
-}
